@@ -1,4 +1,4 @@
 # Websocket Practice
 
 ## Demo
-<img src="./demo.gif" width="700" align="center"/>
+<img src="./demo.gif" align="center"/>
