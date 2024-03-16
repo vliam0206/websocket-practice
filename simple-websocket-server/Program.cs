@@ -10,7 +10,7 @@ public class Echo : WebSocketBehavior
         // write the message to server console
         Console.WriteLine($"Received message from client: {e.Data}");
         // send the message to the client console
-        Send("Hello from the cutie Server!");
+        Send($"Your message has been sent at {DateTime.UtcNow.ToString("f")}.");
     }
 }
 

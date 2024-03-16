@@ -12,9 +12,15 @@ public class Program
         ws.OnMessage += Ws_OnMessage;
 
         ws.Connect();
-        ws.Send("Hello Server from a cutie client!");
-
-        Console.ReadKey();
+        
+        // show console client
+        var input = "";        
+        while (input != "G9")
+        {
+            Console.WriteLine("Enter your message: ");
+            input = Console.ReadLine();
+            ws.Send(input);
+        }             
 
         ws.Close();
     }
