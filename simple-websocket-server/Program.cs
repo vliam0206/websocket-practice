@@ -9,12 +9,12 @@ public class Echo : WebSocketBehavior
     {
         // write the message to server console
         Console.WriteLine($"Received message from client: {e.Data}");
-        // send the same message to the client console
-        Send(e.Data);
+        // send the message to the client console
+        Send("Hello from the cutie Server!");
     }
 }
 
-class Program
+public class Program
 {
     static void Main(string[] args)
     {
