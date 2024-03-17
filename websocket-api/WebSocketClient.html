@@ -1,30 +1,47 @@
 ﻿<!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test WebSocket</title>
 </head>
 <body>
-    <h1>Test WebSocket, show (x,y) realtime</h1>
-    <p id="x-value"></p>
-    <p id="y-value"></p>
+    <button onclick="closeWebSocket()">Close WebSocket</button>
+    <span name="chat-session"></span>
+    <br>
+    <label for="message">Enter Message:</label>
+    <input type="text" id="message">
+    <button onclick="sendMessage()">Send Message</button>
+    <br>
 </body>
 </html>
+
 <script>
     const socket = new WebSocket('wss://localhost:7092/api/ws');
-    socket.onopen = () => {     
+    socket.onopen = () => {
         console.log("Connected to the Server via WebSocket");
     }
 
-    socket.onmessage = (event) => {      
+    socket.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        const x = data.x ?? 0;
-        const y = data.y ?? 0;
-        console.log(`x = ${x}, y = ${y}`);
+       
+        // Display the received message in the chat session
+        const message = document.createElement('div');
+        message.textContent = `Server: ${data.message}`;
+        document.querySelector('[name="chat-session"]').appendChild(message);
+    }
 
-        // show the (x,y) value in the screen
-        document.getElementById('x-value').innerText = `X: ${x}`;
-        document.getElementById('y-value').innerText = `Y: ${y}`;
+    function closeWebSocket() {
+        socket.close();
+        console.log("WebSocket connection closed");
+    }
+
+    function sendMessage() {
+        const messageInput = document.getElementById('message');
+        const message = messageInput.value;
+        socket.send(message);
+        console.log("Message sent to WebSocket server:", message);
+        // Clear the input field after sending the message
+        messageInput.value = '';
     }
 </script>
