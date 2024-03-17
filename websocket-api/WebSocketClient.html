@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>Test WebSocket, show (x,y) realtime</h1>
+    <p id="x-value"></p>
+    <p id="y-value"></p>
+</body>
+</html>
+<script>
+    const socket = new WebSocket('wss://localhost:7092/api/ws');
+    socket.onopen = () => {     
+        console.log("Connected to the Server via WebSocket");
+    }
+
+    socket.onmessage = (event) => {      
+        const data = JSON.parse(event.data);
+        const x = data.x ?? 0;
+        const y = data.y ?? 0;
+        console.log(`x = ${x}, y = ${y}`);
+
+        // show the (x,y) value in the screen
+        document.getElementById('x-value').innerText = `X: ${x}`;
+        document.getElementById('y-value').innerText = `Y: ${y}`;
+    }
+</script>
